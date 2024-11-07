@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""
-Module for Personal Data Logging and Redaction
+""" 
+0x05 Personal data
 """
 
 import logging
@@ -9,30 +9,24 @@ import re
 import mysql.connector
 from typing import List
 
-# Fields considered Personally Identifiable Information (PII)
+
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
-def redact_pii(fields: List[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:
     """
-    Redact specified fields in a log message.
-
-    Args:
-        fields: List of field names to redact.
-        redaction: Redaction string to replace field values.
-        message: Log message containing field-value pairs.
-        separator: Separator used to split fields in the message.
-    Returns:
-        Redacted log message.
+    Replacing
     """
-    for field in fields:
-        message = re.sub(rf"{field}=(.*?)\{separator}", f'{field}={redaction}{separator}', message)
+    for f in fields:
+        message = re.sub(rf"{f}=(.*?)\{separator}",
+                         f'{f}={redaction}{separator}', message)
     return message
 
 
 class RedactingFormatter(logging.Formatter):
     """
-    Custom logging formatter to redact PII fields in log records.
+    RedactingFormatter class.
     """
 
     REDACTION = "***"
@@ -40,26 +34,20 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
-        """
-        Initialize formatter with PII fields to redact.
-        """
-        super().__init__(self.FORMAT)
+        """ Init """
         self.fields = fields
+        super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def format(self, record: logging.LogRecord) -> str:
-        """
-        Apply redaction to the log record message.
-        """
-        return redact_pii(self.fields, self.REDACTION, super().format(record), self.SEPARATOR)
+        """ Format """
+        return filter_datum(self.fields, self.REDACTION,
+                            super().format(record), self.SEPARATOR)
 
 
 def get_logger() -> logging.Logger:
+    """ Implementing a logger.
     """
-    Create and configure a logger with PII redaction.
 
-    Returns:
-        Configured logger instance.
-    """
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
@@ -69,44 +57,36 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db_connection() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """
-    Establish a connection to the MySQL database.
-
-    Returns:
-        MySQL database connection instance.
+    Implement db conectivity
     """
-    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
-    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    database_name = os.getenv("PERSONAL_DATA_DB_NAME")
-    
-    return mysql.connector.connect(
+    psw = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    username = os.environ.get('PERSONAL_DATA_DB_USERNAME', "root")
+    host = os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.environ.get('PERSONAL_DATA_DB_NAME')
+    conn = mysql.connector.connect(
         host=host,
-        database=database_name,
+        database=db_name,
         user=username,
-        password=password
-    )
+        password=psw)
+    return conn
 
 
 def main() -> None:
     """
-    Main function to retrieve and log user data with redacted PII.
+    Implement a main function
     """
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor()
+    db = get_db()
+    cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
-    
     for row in cursor:
-        message = (
-            f"name={row[0]}; email={row[1]}; phone={row[2]}; "
-            f"ssn={row[3]}; password={row[4]}; ip={row[5]}; "
+        message = f"name={row[0]}; email={row[1]}; phone={row[2]}; " +\
+            f"ssn={row[3]}; password={row[4]};ip={row[5]}; " +\
             f"last_login={row[6]}; user_agent={row[7]};"
-        )
         print(message)
-    
     cursor.close()
-    db_connection.close()
+    db.close()
 
 
 if __name__ == '__main__':
