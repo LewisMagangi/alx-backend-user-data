@@ -3,8 +3,11 @@ from flask import request
 from typing import TypeVar, List
 
 class Auth:
+    """ Authentication Class
+    """
     def __init__(self):
-        pass
+        """ Initialisation code block
+        """
     
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
