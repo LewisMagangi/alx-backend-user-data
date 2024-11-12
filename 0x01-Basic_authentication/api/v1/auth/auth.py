@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
+""" 3. Auth class
+"""
+
 from flask import request
 from typing import TypeVar, List
+
 
 class Auth:
     """ Authentication Class
     """
+
+
     def __init__(self):
         """ Initialisation code block
         """
