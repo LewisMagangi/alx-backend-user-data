@@ -4,6 +4,7 @@
 
 from flask import request
 from api.v1.auth.auth import Auth
+import base64
 
 
 class BasicAuth(Auth):
@@ -27,3 +28,18 @@ class BasicAuth(Auth):
         if ah is None or type(ah) is not str or not ah.startswith("Basic "):
             return None
         return ah.split("Basic ")[1]
+
+    def decode_base64_authorization_header(self, base64_authorization_header):
+        """
+        Decodes the string from base 64
+        """
+        bah = base64_authorization_header
+        if bah is None or type(bah) is not str:
+            return None
+
+        try:
+            base64.b64decode(bah, validate=True)
+        except (base64.binascii.Error, ValueError):
+            return None
+
+        return base64_authorization_header.decode('utf-8')
