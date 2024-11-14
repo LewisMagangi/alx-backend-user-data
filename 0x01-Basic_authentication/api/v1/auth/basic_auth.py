@@ -6,7 +6,7 @@ from flask import request
 from api.v1.auth.auth import Auth
 
 
-class BasicAuth:
+class BasicAuth(Auth):
     """ A Basic Authentication Class inheriting from Auth Class
     """
 
