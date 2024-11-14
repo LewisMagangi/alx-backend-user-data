@@ -23,7 +23,7 @@ class Auth:
         - False if path is in excluded_paths (considering slash tolerance)
         """
 
-        if path is None or excluded_paths is None or len(path) == 0:
+        if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
 
         normalized_path = path.rstrip('/')
@@ -37,9 +37,10 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """
         Retrieves the Authorization header from the request.
-        Currently, it returns None.
         """
-        return None
+        if request is None:
+            return None
+        return request.headers.get("Authorization")
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
