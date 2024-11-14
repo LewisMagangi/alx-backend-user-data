@@ -73,12 +73,14 @@ class BasicAuth(Auth):
         if e is None or type(e) is not str or p is None or type(p) is not str:
             return None
 
-        user = User.search(e)
-
-        if user is None:
+        try:
+            user = User.search({"email": e})
+        except Exception:
             return None
 
-        if not user.is_valid_password(e):
+        if user is None or len(user) == 0:
             return None
 
-        return user
+        for us in user:
+            if us.is_valid_password(p):
+                return us
