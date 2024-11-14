@@ -6,8 +6,7 @@ from flask import request
 from api.v1.auth.auth import Auth
 import base64
 from typing import TypeVar
-
-User = TypeVar('User')
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -46,8 +45,7 @@ class BasicAuth(Auth):
             return None
 
         return decoded_bytes.decode('utf-8')
-    
-    """
+
     def extract_user_credentials(self, decoded_base64_authorization_header):
         '''
         A method that extracts user credentials such as
@@ -83,42 +81,3 @@ class BasicAuth(Auth):
         for u in user:
             if u.is_valid_password(user_pwd):
                 return u
-            """
-
-    def user_object_from_credentials(self, user_email, user_pwd):
-        """
-        A method in the class BasicAuth that returns:
-        the User instance based on his email and password
-        """
-        print(f"Debug - Checking credentials for email: {user_email}")
-        
-        if not user_email or not isinstance(user_email, str):
-            print("Debug - Invalid email format")
-            return None
-        if not user_pwd or not isinstance(user_pwd, str):
-            print("Debug - Invalid password format")
-            return None
-
-        try:
-            # Search for users with the given email
-            users = User.search({'email': user_email})
-            print(f"Debug - Found users: {users}")
-            
-            if not users or len(users) == 0:
-                print("Debug - No users found")
-                return None
-                
-            # Check each user's password
-            for user in users:
-                print(f"Debug - Checking password for user: {user.email}")
-                if user.is_valid_password(user_pwd):
-                    print("Debug - Password valid")
-                    return user
-                else:
-                    print("Debug - Password invalid")
-                    
-            return None
-            
-        except Exception as e:
-            print(f"Debug - Error in user_object_from_credentials: {str(e)}")
-            return None
