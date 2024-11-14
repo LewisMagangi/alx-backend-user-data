@@ -38,8 +38,8 @@ class BasicAuth(Auth):
             return None
 
         try:
-            base64.b64decode(bah, validate=True)
+            decoded_bytes = base64.b64decode(bah, validate=True)
         except (base64.binascii.Error, ValueError):
             return None
 
-        return base64_authorization_header.decode('utf-8')
+        return decoded_bytes.decode('utf-8')
