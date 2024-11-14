@@ -10,11 +10,9 @@ class BasicAuth:
     """ A Basic Authentication Class inheriting from Auth Class
     """
 
-
     def __init__(self):
         """
         Initialization for BasicAuth (if needed)
         """
-        
-        
-        super().__init__()
+
+    super().__init__()
