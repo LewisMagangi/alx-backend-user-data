@@ -5,6 +5,9 @@
 from flask import request
 from api.v1.auth.auth import Auth
 import base64
+from typing import TypeVar
+
+User = TypeVar('User')
 
 
 class BasicAuth(Auth):
@@ -58,3 +61,24 @@ class BasicAuth(Auth):
         email, password = dbah.split(":")
 
         return email, password
+
+    def user_object_from_credentials(user_email, user_pwd):
+        """
+        A method in the class BasicAuth that returns:
+        the User instance based on his email and password
+        """
+
+        e = user_email
+        p = user_pwd
+        if e is None or type(e) is not str or p is None or type(p) is not str:
+            return None
+
+        user = User.search(user_email)
+
+        if user is None:
+            return None
+
+        if not user.is_valid_password(user_pwd):
+            return None
+
+        return user
