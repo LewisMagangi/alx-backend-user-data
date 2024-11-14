@@ -15,4 +15,4 @@ class BasicAuth:
         Initialization for BasicAuth (if needed)
         """
 
-    super().__init__()
+    pass
