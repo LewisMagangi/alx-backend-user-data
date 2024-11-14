@@ -57,4 +57,4 @@ class BasicAuth(Auth):
 
         email, password = dbah.split(":")
 
-        return f'{email}: {password}'
+        return f'{email}, {password}'
