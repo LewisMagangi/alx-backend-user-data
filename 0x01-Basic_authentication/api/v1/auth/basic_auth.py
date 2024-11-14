@@ -62,7 +62,7 @@ class BasicAuth(Auth):
 
         return email, password
 
-    def user_object_from_credentials(user_email, user_pwd):
+    def user_object_from_credentials(self, user_email, user_pwd):
         """
         A method in the class BasicAuth that returns:
         the User instance based on his email and password
@@ -73,12 +73,12 @@ class BasicAuth(Auth):
         if e is None or type(e) is not str or p is None or type(p) is not str:
             return None
 
-        user = User.search(user_email)
+        user = User.search(e)
 
         if user is None:
             return None
 
-        if not user.is_valid_password(user_pwd):
+        if not user.is_valid_password(e):
             return None
 
         return user
