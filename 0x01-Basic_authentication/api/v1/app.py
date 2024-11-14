@@ -39,7 +39,9 @@ def forbidden(error) -> str:
 
 
 @app.before_request
-def before_request():
+def before_request() -> str:
+    """ A decorator to request validation before certain procedures
+    """
     if Auth is None:
         pass
 
