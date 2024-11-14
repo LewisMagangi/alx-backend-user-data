@@ -85,4 +85,5 @@ class BasicAuth(Auth):
             if us.is_valid_password(p):
                 return us
 
-        return  None
+        return None
+    
