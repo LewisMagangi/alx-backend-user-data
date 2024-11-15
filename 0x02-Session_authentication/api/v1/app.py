@@ -11,7 +11,6 @@ import os
 from api.v1.auth.basic_auth import BasicAuth
 
 
-
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
@@ -23,6 +22,7 @@ if getenv('AUTH_TYPE') == "basic_auth":
 
 elif getenv('AUTH_TYPE') == "session_auth":
     auth = SessionAuth()
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:

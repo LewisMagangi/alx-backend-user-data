@@ -53,6 +53,7 @@ class Auth:
         """
         return None
 
+
 class SessionAuth(Auth):
     """
     A session Authentication Class.
@@ -61,5 +62,5 @@ class SessionAuth(Auth):
     def __init__(self):
         """ Initialisation code block
         """
-    
+
     pass
