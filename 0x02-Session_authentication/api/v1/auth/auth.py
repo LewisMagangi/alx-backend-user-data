@@ -52,18 +52,3 @@ class Auth:
         Currently, it returns None.
         """
         return None
-
-
-class SessionAuth(Auth):
-    """
-    A session Authentication Class.
-    """
-
-    def __init__(self):
-        """ Initialisation code block
-        """
-
-    if not issubclass(SessionAuth, Auth):
-        return False
-
-    pass
