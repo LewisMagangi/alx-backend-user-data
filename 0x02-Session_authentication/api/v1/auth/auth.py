@@ -63,4 +63,7 @@ class SessionAuth(Auth):
         """ Initialisation code block
         """
 
+    if not issubclass(SessionAuth, Auth):
+        return False
+
     pass
