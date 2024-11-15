@@ -14,6 +14,8 @@ class Auth:
         """ Initialisation code block
         """
 
+    SESSION_NAME = '_my_session_id'
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
         Determines whether authentication is required for a given path.
@@ -62,4 +64,4 @@ class Auth:
         if request is None:
             return None
 
-        return request.cookies.get('_my_session_id')
+        return request.cookies.get(self.SESSION_NAME, None)
