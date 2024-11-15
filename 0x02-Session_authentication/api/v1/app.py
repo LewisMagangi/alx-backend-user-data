@@ -46,10 +46,11 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
+"""
 @app.before_request
 def before_request() -> str:
-    """ A decorator to request validation before certain procedures
-    """
+    ''' A decorator to request validation before certain procedures
+    '''
     if not Auth:
         pass
 
@@ -69,6 +70,26 @@ def before_request() -> str:
         abort(401)
 
     request.current_user = auth.current_user(request)
+"""
+
+
+@app.before_request
+def before():
+    """
+    Before request.
+    """
+    if auth:
+        paths = ['/api/v1/status/',
+                 '/api/v1/unauthorized/', '/api/v1/forbidden/',
+                 '/api/v1/auth_session/login/']
+        if not auth.require_auth(request.path, paths):
+            return
+        if (not auth.authorization_header(request) and
+                not auth.session_cookie(request)):
+            abort(401)
+        request.current_user = auth.current_user(request)
+        if not request.current_user:
+            abort(403)
 
 
 if __name__ == "__main__":
