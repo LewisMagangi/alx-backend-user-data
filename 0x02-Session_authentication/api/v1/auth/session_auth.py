@@ -21,6 +21,10 @@ class SessionAuth(Auth):
         """
 
     def create_session(self, user_id: str = None) -> str:
+        """
+        Creates a new session for a user
+        """
+
         if user_id is None or type(user_id) is not str:
             return None
 
