@@ -6,12 +6,11 @@ from os import getenv
 from api.v1.views import app_views
 from api.v1.auth.auth import Auth
 from api.v1.auth.session_auth import SessionAuth
-from flask import Flask, jsonify, abort, request, g
+from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
 from api.v1.auth.basic_auth import BasicAuth
-from api.v1.auth.session_exp_auth import SessionExpAuth
-from api.v1.auth.session_db_auth import SessionDBAuth
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -24,12 +23,6 @@ if getenv('AUTH_TYPE') == "basic_auth":
 
 elif getenv('AUTH_TYPE') == "session_auth":
     auth = SessionAuth()
-
-elif getenv('AUTH_TYPE') == 'session_exp_auth':
-    auth = SessionExpAuth()
-
-elif getenv('AUTH_TYPE') == 'session_db_auth':
-    auth = SessionDBAuth()
 
 
 @app.errorhandler(404)
