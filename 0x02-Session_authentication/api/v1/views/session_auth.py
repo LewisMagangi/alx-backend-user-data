@@ -5,10 +5,10 @@ Views Session Authentication.
 
 from flask import request, jsonify
 from api.v1.views import app_views
-from api.models import User
-# from api.v1.auth import auth
+from models import User
+# from api.v1.auth import auth Imported Locally
 from os import getenv
-# SESSION_NAME = 'tip'
+
 
 
 @app.route('/auth_session/login', methods['POST'], strict_slashes=False)
