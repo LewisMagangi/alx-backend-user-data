@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from models import User
 # from api.v1.auth import auth Imported Locally
 from os import getenv
-
+from api.v1.app import app
 
 
 @app.route('/auth_session/login', methods['POST'], strict_slashes=False)
