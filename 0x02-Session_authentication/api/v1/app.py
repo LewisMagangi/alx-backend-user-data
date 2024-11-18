@@ -48,22 +48,28 @@ def forbidden(error) -> str:
 
 @app.before_request
 def before_request() -> str:
-    """ A decorator to request validation before certain procedures
-    """
-    if Auth is None:
-        pass
+    ''' A decorator to request validation before certain procedures
+    '''
+    if not auth:
+        return
 
     paths = ['/api/v1/status/', '/api/v1/unauthorized/',
-             '/api/v1/forbidden/', 'api/v1/auth_session/login/']
+             '/api/v1/forbidden/', '/api/v1/auth_session/login/']
 
-    if auth and auth.require_auth(request.path, paths):
-        if auth.authorization_header(request) is None:
-            abort(401)
+    r = request
 
-        elif auth.current_user(request) is None:
-            abort(403)
+    if not auth.require_auth(request.path, paths):
+        return
 
-        request.current_user = auth.current_user(request)
+    if not auth.authorization_header(r) and not auth.session_cookie(r):
+        abort(401)
+
+    current_user = auth.current_user(request)
+
+    if auth.current_user(request) is None:
+        abort(403)
+
+    request.current_user = current_user
 
 
 if __name__ == "__main__":
