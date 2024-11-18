@@ -4,8 +4,8 @@ Views Session Authentication.
 """
 
 from flask import request, jsonify
-# from api.v1 import app
-from api.v1.models import User
+from api.v1.views import app_views
+from api.models import User
 # from api.v1.auth import auth
 from os import getenv
 # SESSION_NAME = 'tip'
