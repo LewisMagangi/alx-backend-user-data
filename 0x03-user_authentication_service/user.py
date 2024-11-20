@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-This module contains the User class,
-which represents a user in the system.
-"""
-
 from sqlalchemy import Integer, Column, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from user import User
