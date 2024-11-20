@@ -7,7 +7,7 @@ Authentication Module
 import bcrypt
 
 
-def _hash_password(self, password: str) -> str:
+def _hash_password(self, password: str) -> bytes:
     """
     Hashes a password using bcrypt.
     pyc"""
