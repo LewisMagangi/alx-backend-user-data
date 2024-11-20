@@ -7,6 +7,10 @@ Base = declarative_base()
 
 
 class User(Base):
+    """
+    SQLAlchemy User model for the users table
+    """
+
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -14,3 +18,9 @@ class User(Base):
     hashed_password = Column(String(250), nullable=False)
     session_id = Column(String(250), nullable=True)
     reset_token = Column(String(250), nullable=True)
+
+    def __repr__(self):
+        """
+        String rep.
+        """
+        return f"User: id={self.id}"
