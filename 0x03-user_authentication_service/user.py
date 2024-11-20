@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+""" User Module
+"""
 
 from sqlalchemy import Integer, Column, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
