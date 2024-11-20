@@ -34,7 +34,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """
         Add a new user to the database.
         Returns the created User object.
@@ -51,7 +51,7 @@ class DB:
 
         return new_user
 
-    def find_user_by(self, **kwargs: str):
+    def find_user_by(self, **kwargs: str) -> User:
         """
             Finding users from table.
         """
