@@ -48,7 +48,7 @@ class DB:
 
         return new_user
 
-    def find_user_by(self, *args: str, **kwargs: str):
+    def find_user_by(self, **kwargs: str):
         """
             Finding users from table.
         """
