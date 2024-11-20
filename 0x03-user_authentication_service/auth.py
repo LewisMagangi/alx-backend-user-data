@@ -20,9 +20,9 @@ class Auth:
         Initialization of the module
         """
 
-        self._db = DB
+        self._db = DB()
 
-    def _hash_password(password: str) -> bytes:
+    def _hash_password(self, password: str) -> bytes:
         """
         Hashes a password using bcrypt.
         """
@@ -35,7 +35,7 @@ class Auth:
         """
 
         try:
-            self.db.find_user_by(email=email)
+            self._db.find_user_by(email=email)
             raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = self._hash_password(password)
