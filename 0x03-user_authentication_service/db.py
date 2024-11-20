@@ -40,6 +40,9 @@ class DB:
         Returns the created User object.
         """
 
+        if email is None or hashed_password is None:
+            return None
+
         new_user = User(email=email, hashed_password=hashed_password)
 
         session = self._session
