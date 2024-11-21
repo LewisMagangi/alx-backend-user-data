@@ -104,11 +104,10 @@ class Auth:
         Reseting a password token
         """
 
-        user = self._db.find_user_by(email=email)
-        if not user:
-            raise ValueError(f"No user found with email {email}")
-
-        token = _generate_uuid()
-        self._db.update_user(user.id, reset_token=token)
-
-        return token
+        try:
+            user = self._db.find_user_by(email=email)
+            token = _generate_uuid()
+            self._db.update_user(user.id, reset_token=token)
+            return token
+        except NoResultFound:
+            raise ValueError
