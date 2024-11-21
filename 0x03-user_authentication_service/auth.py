@@ -109,6 +109,6 @@ class Auth:
             raise ValueError(f"No user found with email {email}")
 
         token = _generate_uuid()
-        self._db.update_user(user.id, reset_password_token=token)
+        self._db.update_user(user.id, reset_token=token)
 
         return token
