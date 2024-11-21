@@ -107,11 +107,11 @@ def reset_password():
     email = request.form.get('email')
     user = AUTH.create_session(email)
 
-    try:
-        token = AUTH.get_reset_password_token(email)
-        return jsonify({'email': email, 'reset_token': token})
-    except ValueError:
-        return jsonify({'error': 'Unauthorized'}), 403
+    if not user:
+        abort(403)
+
+    token = AUTH.get_reset_password_token(email)
+    return jsonify({'email': email, 'reset_token': token})
 
 
 if __name__ == "__main__":
