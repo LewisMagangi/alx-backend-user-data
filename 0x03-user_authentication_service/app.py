@@ -98,7 +98,7 @@ def profile():
     abort(403)
 
 
-@app.route('/reset_password', methods=['GET'], strict_slashes=False)
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
 def get_reset_password_token() -> str:
     """
     Reset password endpoint.
