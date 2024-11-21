@@ -99,7 +99,7 @@ def profile():
 
 
 @app.route('/reset_password', methods=['GET'], strict_slashes=False)
-def reset_password():
+def get_reset_password_token() -> str:
     """
     Reset password endpoint.
     """
@@ -111,7 +111,7 @@ def reset_password():
         abort(403)
 
     token = AUTH.get_reset_password_token(email)
-    return jsonify({'email': email, 'reset_token': token})
+    return jsonify({'email': email, 'reset_token': token}), 200
 
 
 if __name__ == "__main__":
