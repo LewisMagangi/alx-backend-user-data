@@ -98,5 +98,21 @@ def profile():
     abort(403)
 
 
+@app.route('/reset_password', methods=['GET'], strict_slashes=False)
+def reset_password():
+    """
+    Reset password endpoint.
+    """
+
+    email = request.form.get('email')
+    user = AUTH.create_session(email)
+
+    try:
+        token = AUTH.get_reset_password_token(email)
+        return jsonify({'email': email, 'reset_token': token})
+    except ValueError:
+        return jsonify({'error': 'Unauthorized'}), 403
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0', port='5000')
