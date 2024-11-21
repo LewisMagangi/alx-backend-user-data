@@ -91,8 +91,9 @@ def profile():
     if not session_id:
         return jsonify({'error': 'Unauthorized'}), 403
 
+    user = AUTH.get_user_from_session_id(session_id)
+
     if user:
-        user = AUTH.get_user_from_session_id(session_id)
         return jsonify({'email': user.email}), 200
     abort(403)
 
